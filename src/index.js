@@ -1,3 +1,6 @@
 module.exports = function multiply(first, second) {
-  // your solution
+  let product = 0;
+  first = +first;
+  second = +second;
+  return product = eval("first*second") + "";
 }
