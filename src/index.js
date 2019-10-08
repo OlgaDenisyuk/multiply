@@ -1,32 +1,27 @@
 module.exports = function multiply(first, second) {
-  if ((first | 0) == 0 || (second | 0) == 0) {
-    return '0';
-}
-
-first = first.split('').reverse();
-second = second.split('').reverse();
-var result = [];
-
-for (var i = 0; first[i] >= 0; i++) {
-    for (var j = 0; second[j] >= 0; j++) {
-        if (!result[i + j]) {
-            result[i + j] = 0;
-        }
-
-        result[i + j] += first[i] * second[j];
+    if( first.length < second.length )
+    {
+        var tmp = second;
+        second = first;
+        first = tmp;
     }
-}
+    var a1 = first.split( '' );
+    var a2 = second.split( '' );
+    var r = [];
+    var rlen = a1.length + a2.length; 
+    for( var k = 0; k < rlen; k++ )
+        r[ k ] = 0;
+    for( var j = 0; j < a2.length; j++ ) 
+        for( var i = 0; i < a1.length; i++ )
+            r[ 1 + i + j ] += a1[ i ] * a2[ j ];   
 
-for (var i = 0; result[i] >= 0; i++) {
-    if (result[i] >= 10) {
-        if (!result[i + 1]) {
-            result[i + 1] = 0;
+    for( var k = rlen - 1; k > 0; k-- )
+        if( r[ k ] >= 10 )
+        {
+            r[ k - 1 ] += Math.floor( r[ k ] / 10 );
+            r[ k ] %= 10;
         }
-
-        result[i + 1] += parseInt(result[i] / 10);
-        result[i] %= 10;
-    }
-}
-
-return result.reverse().join('');
+    if( r[ 0 ] == 0 )
+        delete r[ 0 ];
+    return r.join( '' );    
 }
